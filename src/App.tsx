@@ -1,16 +1,7 @@
 import { useState } from 'react';
 import { TagInput } from './components/tagInput';
 import { Tag } from './vite-env';
-
-const autoCompleteOptions = [
-  { id: 0, text: 'Pakistan' },
-  { id: 1, text: 'Afghanistan' },
-  { id: 2, text: 'India' },
-  { id: 3, text: 'Australia' },
-  { id: 4, text: 'Bangladesh' },
-  { id: 5, text: 'Canada' },
-  { id: 6, text: 'Nepal' },
-];
+import { countriesOptions } from './utils';
 
 function App() {
   const [tagsList, setTagsList] = useState<Tag[]>([]);
@@ -21,7 +12,7 @@ function App() {
       <section className="flex items-center justify-center md:w-1/2 px-2 mx-auto">
         <TagInput
           tags={tagsList}
-          autoCompleteOptions={autoCompleteOptions}
+          autoCompleteOptions={countriesOptions}
           setTags={(newTags) => {
             setTagsList(newTags);
           }}
