@@ -103,9 +103,10 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
 
       <input
         type="text"
-        className="p-2 border-[1px] border-transparent border-gray-400 rounded-md outline-none w-full"
+        className="p-2 border-[1px] border-gray-400 rounded-md outline-none w-full"
         placeholder="Add Countries"
         value={inputValue}
+        data-testid="tag-input"
         aria-autocomplete="list"
         aria-label="Add Countries Input"
         aria-labelledby="autocomplete-list"
