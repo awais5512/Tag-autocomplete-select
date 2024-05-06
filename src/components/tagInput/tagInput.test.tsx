@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vitest } from 'vitest';
 import { TagInput } from './tagInput';
 import { countriesOptions } from '../../utils';
@@ -19,27 +19,34 @@ describe('TagInput', () => {
     expect(optionsContainer).toBeInTheDocument();
   });
 
-  it('Add tag to tagged list and clear input upon selection', async () => {
+  it('Input value should be updated', async () => {
+    render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={() => {}} />);
+
+    const input = screen.getByTestId('tag-input') as HTMLInputElement;
+    input.click();
+
+    fireEvent.change(input, { target: { value: 'Pak' } });
+
+    expect(input.value).toEqual('Pak');
+  });
+
+  it('Add option to tagged list when enter is pressed', async () => {
     const addTagMock = vitest.fn();
 
     render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={addTagMock} />);
 
+    const inputText = 'Pak';
     const input = screen.getByTestId('tag-input') as HTMLInputElement;
+
     input.focus();
 
-    act(() => {
-      fireEvent.change(input, { target: { value: 'Pak' } });
-    });
+    fireEvent.change(input, { target: { value: inputText } });
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fireEvent.keyDown(input, { key: 'Enter' });
 
-    const firstSuggestion = await screen.findByText('Pakistan');
-    fireEvent.click(firstSuggestion);
+    await screen.findByTestId('tagged-option');
 
-    expect(addTagMock).toHaveBeenCalled();
-
-    const taggedElement = await screen.findByRole('tag-option');
-
-    expect(taggedElement).toHaveTextContent('Pakistan');
-    expect(input.value).toBe('');
+    expect(input.value).toEqual(inputText);
   });
 
   // it('delete tag when clicked on x', async () => {

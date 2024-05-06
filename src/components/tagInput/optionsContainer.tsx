@@ -6,7 +6,6 @@ export const OptionsContainer = forwardRef<HTMLUListElement, OptionsContainerPro
     return (
       <ul
         role="listbox"
-        aria-modal="true"
         id="autocomplete-list"
         data-testid="options-container"
         ref={ref}
@@ -18,8 +17,9 @@ export const OptionsContainer = forwardRef<HTMLUListElement, OptionsContainerPro
           options.map((tag, index) => (
             <li
               key={tag.id}
+              role="option"
               className={`
-              bg-white border-[1px] border-gray-400 p-2 cursor-pointer select-none hover:bg-gray-400 hover:text-white
+              border-[1px] border-gray-400 p-2 cursor-pointer select-none hover:bg-gray-400 hover:text-white
               ${selectedOptionIndex === index ? 'text-white bg-gray-500' : ''}
             `}
               onClick={() => addTag(tag)}
