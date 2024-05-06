@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { TagInputProps } from './interfaces';
-import { Tag } from '../../vite-env';
+import { Country } from '../../vite-env';
 import { OptionsContainer } from './optionsContainer';
 import { TaggedOption } from './taggedOption';
 import { useClickOutside } from '../../hooks/useClickOutside';
@@ -12,7 +12,7 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
   const optionsContainerRef = useRef<HTMLUListElement>(null);
   const tagInputWrapperRef = useRef<HTMLDivElement>(null);
 
-  const addTag = (tag: Tag) => {
+  const addTag = (tag: Country) => {
     setTags([...tags, tag]);
     setInputValue('');
   };
@@ -23,11 +23,11 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
 
   useClickOutside(tagInputWrapperRef, clickOutsidehandler);
 
-  const removeTag = (tagID: number) => setTags(tags.filter((t) => t.id !== tagID));
+  const removeTag = (tagID: string) => setTags(tags.filter((t) => t.name !== tagID));
 
   const filteredAutoCompleteOptions = autoCompleteOptions.filter((option) => {
     return (
-      !tags.some((tag) => tag.text === option.text) && option.text.toLowerCase().includes(inputValue.toLowerCase())
+      !tags.some((tag) => tag.name === option.name) && option.name?.toLowerCase().includes(inputValue.toLowerCase())
     );
   });
 
@@ -68,7 +68,7 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
         }
         case 'Backspace': {
           if (inputValue === '') {
-            removeTag(tags.length > 0 ? tags[tags.length - 1].id : 0);
+            removeTag(tags.length > 0 ? tags[tags.length - 1].name : '');
           }
 
           break;
@@ -87,7 +87,7 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
       {tags.length > 0 && (
         <div className="flex items-center gap-1 flex-wrap">
           {tags.map((tag) => (
-            <TaggedOption key={tag.id} tag={tag} removeTag={removeTag} />
+            <TaggedOption key={tag.name} tag={tag} removeTag={removeTag} />
           ))}
         </div>
       )}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { TagInput } from './tagInput';
-import { Tag } from '../../vite-env';
+import { Country } from '../../vite-env';
 import { countriesOptions } from '../../utils';
 
 export default {
@@ -26,9 +26,9 @@ export default {
 
 export const Default = {
   render: () => {
-    const [tags, setTags] = useState<Tag[]>([]);
+    const [countries, setCountries] = useState<Country[]>([]);
 
-    return <TagInput tags={tags} autoCompleteOptions={countriesOptions} setTags={setTags} />;
+    return <TagInput tags={countries} autoCompleteOptions={countriesOptions} setTags={setCountries} />;
   },
   args: {
     tags: [],

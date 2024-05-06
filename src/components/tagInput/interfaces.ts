@@ -1,13 +1,13 @@
-import { Tag } from "../../vite-env";
+import { Country } from "../../vite-env";
 
 export interface TagInputProps {
-  tags: Tag[];
-  autoCompleteOptions: Tag[];
-  setTags: (tags: Tag[]) => void;
+  tags: Country[];
+  autoCompleteOptions: Country[];
+  setTags: (tags: Country[]) => void;
 }
 
 export interface OptionsContainerProps {
-  options: Tag[];
+  options: Country[];
   selectedOptionIndex: number | null;
-  addTag: (tag: Tag) => void;
+  addTag: (tag: Country) => void;
 }

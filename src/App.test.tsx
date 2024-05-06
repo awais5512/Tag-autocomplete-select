@@ -11,4 +11,8 @@ describe('render', () => {
     render(<App />);
     expect(true).toBeTruthy();
   });
+
+  it('should render correctly', async () => {
+    render(<App />);
+  });
 });

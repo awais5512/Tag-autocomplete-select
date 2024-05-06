@@ -4,7 +4,7 @@ import { TagInput } from './tagInput';
 import { countriesOptions } from '../../utils';
 
 describe('TagInput', () => {
-  it('should render correctly', () => {
+  it('should render correctly', async () => {
     render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={() => {}} />);
   });
 

@@ -9,14 +9,14 @@ export const OptionsContainer = forwardRef<HTMLUListElement, OptionsContainerPro
         id="autocomplete-list"
         data-testid="options-container"
         ref={ref}
-        className="absolute w-full left-0 right-0 top-[100%]"
+        className="absolute max-h-[200px] overflow-y-scroll w-full left-0 right-0 top-[100%]"
       >
         {options.length === 0 && <li className="p-2 text-center border-[1px] border-gray-400">No options</li>}
 
         {options.length > 0 &&
           options.map((tag, index) => (
             <li
-              key={tag.id}
+              key={tag.name}
               role="option"
               className={`
               border-[1px] border-gray-400 p-2 cursor-pointer select-none hover:bg-gray-400 hover:text-white
@@ -24,7 +24,7 @@ export const OptionsContainer = forwardRef<HTMLUListElement, OptionsContainerPro
             `}
               onClick={() => addTag(tag)}
             >
-              {tag.text}
+              {tag.name}
             </li>
           ))}
       </ul>

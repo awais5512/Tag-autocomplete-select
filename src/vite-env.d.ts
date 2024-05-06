@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 
-export interface Tag {
-  id: number;
-  text: string;
+export interface Country {
+  name: string;
+  iso2: string;
+  long: number;
+  lat: number;
 }
