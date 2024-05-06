@@ -19,6 +19,7 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
 
   const clickOutsidehandler = () => {
     setShowOptions(false);
+    setSelectedOptionIndex(null);
   };
 
   useClickOutside(tagInputWrapperRef, clickOutsidehandler);
