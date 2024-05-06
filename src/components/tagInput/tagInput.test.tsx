@@ -1,15 +1,23 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vitest } from 'vitest';
 import { TagInput } from './tagInput';
-import { countriesOptions } from '../../utils';
+import { useCountriesData } from '../../hooks/useCountriesData';
 
 describe('TagInput', () => {
   it('should render correctly', async () => {
-    render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={() => {}} />);
+    const { result } = renderHook(() => useCountriesData());
+
+    await waitFor(expect(result.current.loading).toBeFalsy);
+
+    render(<TagInput tags={[]} autoCompleteOptions={result.current.countries} setTags={() => {}} />);
   });
 
   it('show options when input is focused', async () => {
-    render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={() => {}} />);
+    const { result } = renderHook(() => useCountriesData());
+
+    await waitFor(expect(result.current.loading).toBeFalsy);
+
+    render(<TagInput tags={[]} autoCompleteOptions={result.current.countries} setTags={() => {}} />);
 
     const input = screen.getByTestId('tag-input');
     input.focus();
@@ -20,22 +28,29 @@ describe('TagInput', () => {
   });
 
   it('Input value should be updated', async () => {
-    render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={() => {}} />);
+    const { result } = renderHook(() => useCountriesData());
+
+    await waitFor(expect(result.current.loading).toBeFalsy);
+
+    render(<TagInput tags={[]} autoCompleteOptions={result.current.countries} setTags={() => {}} />);
 
     const input = screen.getByTestId('tag-input') as HTMLInputElement;
     input.click();
 
-    fireEvent.change(input, { target: { value: 'Pak' } });
+    fireEvent.change(input, { target: { value: 'Afg' } });
 
-    expect(input.value).toEqual('Pak');
+    expect(input.value).toEqual('Afg');
   });
 
   it('Add option to tagged list when enter is pressed', async () => {
+    const { result } = renderHook(() => useCountriesData());
     const addTagMock = vitest.fn();
 
-    render(<TagInput tags={[]} autoCompleteOptions={countriesOptions} setTags={addTagMock} />);
+    await waitFor(expect(result.current.loading).toBeFalsy);
 
-    const inputText = 'Pak';
+    render(<TagInput tags={[]} autoCompleteOptions={result.current.countries} setTags={addTagMock} />);
+
+    const inputText = 'Afg';
     const input = screen.getByTestId('tag-input') as HTMLInputElement;
 
     input.focus();
@@ -43,6 +58,8 @@ describe('TagInput', () => {
     fireEvent.change(input, { target: { value: inputText } });
     fireEvent.keyDown(input, { key: 'ArrowDown' });
     fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(addTagMock).toHaveBeenCalledTimes(1);
 
     await screen.findByTestId('tagged-option');
 
