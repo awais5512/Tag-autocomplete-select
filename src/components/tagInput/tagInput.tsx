@@ -45,14 +45,36 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
         case 'ArrowDown': {
           event.preventDefault();
 
-          setSelectedOptionIndex((prevIndex) => (prevIndex === null || prevIndex === lastIndex ? 0 : prevIndex + 1));
+          setSelectedOptionIndex((prevIndex) => {
+            const newIndex = prevIndex === null || prevIndex === lastIndex ? 0 : prevIndex + 1;
+
+            if (optionsContainerRef.current && newIndex !== null) {
+              const selectedOptionElement = optionsContainerRef.current.children[newIndex];
+              if (selectedOptionElement) {
+                selectedOptionElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+
+            return newIndex;
+          });
 
           break;
         }
         case 'ArrowUp': {
           event.preventDefault();
 
-          setSelectedOptionIndex((prevIndex) => (prevIndex === null || prevIndex === 0 ? lastIndex : prevIndex - 1));
+          setSelectedOptionIndex((prevIndex) => {
+            const newIndex = prevIndex === null || prevIndex === 0 ? lastIndex : prevIndex - 1;
+
+            if (optionsContainerRef.current && newIndex !== null) {
+              const selectedOptionElement = optionsContainerRef.current.children[newIndex];
+              if (selectedOptionElement) {
+                selectedOptionElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+
+            return newIndex;
+          });
 
           break;
         }
