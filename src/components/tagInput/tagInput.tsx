@@ -51,7 +51,7 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
             if (optionsContainerRef.current && newIndex !== null) {
               const selectedOptionElement = optionsContainerRef.current.children[newIndex];
               if (selectedOptionElement) {
-                selectedOptionElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                selectedOptionElement.scrollIntoView({ block: 'nearest' });
               }
             }
 
@@ -69,7 +69,7 @@ export const TagInput = ({ tags, autoCompleteOptions, setTags }: TagInputProps) 
             if (optionsContainerRef.current && newIndex !== null) {
               const selectedOptionElement = optionsContainerRef.current.children[newIndex];
               if (selectedOptionElement) {
-                selectedOptionElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                selectedOptionElement.scrollIntoView({ block: 'nearest' });
               }
             }
 
