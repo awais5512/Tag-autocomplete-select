@@ -58,4 +58,18 @@ describe('render', () => {
 
     expect(screen.getAllByTestId('tagged-option')[0].textContent).toBe(`${expectedTaggedOption}x`);
   });
+
+  it('fetches countries from an API and fails gracefully', async () => {
+    vitest.spyOn(hooks, 'useCountriesData').mockReturnValue({
+      loading: false,
+      error: new Error('Something went wrong'),
+      countries: [],
+    });
+
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
+    });
+  });
 });
